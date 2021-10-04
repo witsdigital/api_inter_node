@@ -130,6 +130,26 @@ module.exports = {
 
 
   ,
+  updateBoleto: async (objpay) => {
+    console.log(objpay)
+
+    try {
+
+      await instance.get('https://apis.bancointer.com.br/openbanking/v1/certificado/boletos/' + objpay.cod_boleto + '/baixas',
+        {
+          params: objpay.params, 'headers': { 'x-inter-conta-corrente': process.env.CONTACORRENTE }
+        }
+      ).then((data) => {
+        return { msg: data.statusText, cod: data.status, data: null }
+      })
+      
+    }
+    catch (err) {
+      console.log({ msg: err.response.statusText, cod: err.response.status })
+
+      return { msg: err.response.statusText, cod: err.response.status, data: null }
+    }
+  },
   getBoletoPdf: async (objpay) => {
     console.log(objpay)
 
@@ -170,12 +190,13 @@ module.exports = {
         // fs.mkdir('my/new/folder/create', { recursive: true }, (err) => { if (err) throw err; });
 
 
-        return resultado.data
+        return { msg: resultado.statusText, cod: resultado.status, data: null }
       })
     }
     catch (err) {
-      console.log(err)
-      return 0
+      console.log({ msg: err.response.statusText, cod: err.response.status })
+
+      return { msg: err.response.statusText, cod: err.response.status, data: null }
     }
   }
 

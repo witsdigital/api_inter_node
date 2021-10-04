@@ -45,8 +45,17 @@ module.exports = {
   generateSinglePdf: async (req, res) => {
     var obj = req.body;
     try {
-      var bb = await boletoController.getBoletoPdf(obj);
-      res.json({ resp: { statusCode: 200 }, body: bb })
+      bb = await boletoController.getBoletoPdf(obj);
+      res.json({ resp: { statusCode: bb.cod, msg: bb.msg, data: bb.data } })
+    } catch (err) {
+      res.json({ resp: { statusCode: 500 }, body: err })
+    }
+  },
+  updateBoleto: async (req, res) => {
+    var obj = req.body;
+    try {
+      bb = await boletoController.updateBoleto(obj);
+      res.json({ resp: { statusCode: bb.cod, msg: bb.msg, data: bb.data } })
     } catch (err) {
       res.json({ resp: { statusCode: 500 }, body: err })
     }
