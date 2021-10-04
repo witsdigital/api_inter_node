@@ -1,0 +1,36 @@
+{
+  "name": "api_banco",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "author": "WitsDigital",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^3.0.8",
+    "body-parser": "^1.18.2",
+    "consign": "^0.1.6",
+    "cors": "^2.8.5",
+    "cryptr": "^6.0.1",
+    "date-fns": "^2.23.0",
+    "dotenv-safe": "^8.2.0",
+    "express": "^4.16.3",
+    "express-validator": "^5.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.11",
+    "md5": "^2.2.1",
+    "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "nedb": "^1.8.0",
+    "nodemailer": "^6.4.5",
+    "nodemon": "^2.0.4",
+    "request": "^2.88.2",
+    "socket.io": "^2.3.0"
+  }
+}
