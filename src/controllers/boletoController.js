@@ -113,6 +113,23 @@ module.exports = {
       return err
     }
   },
+  updateBoleto: async (objpay) => {
+    console.log(objpay)
+    try {
+      return await instance.get('https://apis.bancointer.com.br/openbanking/v1/certificado/boletos/' + objpay.cod_boleto + '/baixas',
+        {
+          'headers': { 'x-inter-conta-corrente': process.env.CONTACORRENTE }
+        }
+
+      )
+
+    } catch (err) {
+      return err
+    }
+  }
+
+
+  ,
   getBoletoPdf: async (objpay) => {
     console.log(objpay)
 
