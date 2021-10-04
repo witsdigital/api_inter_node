@@ -44,10 +44,9 @@ module.exports = {
   },
   generateSinglePdf: async (req, res) => {
     var obj = req.body;
-    console.log(obj)
     try {
       var bb = await boletoController.getBoletoPdf(obj);
-      res.json({ resp: { statusCode: 200 } })
+      res.json({ resp: { statusCode: 200 }, body: bb })
     } catch (err) {
       res.json({ resp: { statusCode: 500 }, body: err })
     }
@@ -63,36 +62,31 @@ module.exports = {
   },
   getAndGeneratePdf: async (req, res) => {
     var obj = req.body;
-    try {
-      var bb = await boletoController.getBoleto(obj);
-      console.log(bb.content.length)
-      var objArr = [];
-      for (var i = 0; i < bb.content.length; i++) {
+    var bb = await boletoController.getBoleto(obj);
+    console.log(bb.content.length)
+    var objArr = [];
+    for (var i = 0; i < bb.content.length; i++) {
 
-        objArr.push(
-          {
-            dataEmissao: bb.content[i].dataEmissao,
-            cod_boleto: bb.content[i].nossoNumero,
-            nomeSacado: bb.content[i].nomeSacado
-          }
-        )
-      }
-
-
-
-      for (var i = 0; i < objArr.length; i++) {
-        try {
-          var bb = await boletoController.getBoletoPdf(objArr[i]);
-          res.json({ resp: { statusCode: 200 }, body: bb })
-        } catch (err) {
-
-          res.json({ resp: { statusCode: 500 }, body: err })
+      objArr.push(
+        {
+          dataEmissao: bb.content[i].dataEmissao,
+          cod_boleto: bb.content[i].nossoNumero,
+          nomeSacado: bb.content[i].nomeSacado
         }
-      }
-    } catch (eer) {
-      res.json({ resp: { statusCode: 500 }, body: eer })
+      )
     }
 
+    console.log(objArr);
+
+    for (var i = 0; i < objArr.length; i++) {
+      try {
+        var bb = await boletoController.getBoletoPdf(objArr[i]);
+      } catch (err) {
+        console.log(err)
+        return err
+      }
+    }
+    res.json({ resp: { statusCode: 200 }, body: bb })
   },
 
 }
